@@ -18,6 +18,8 @@ const faqs = [
   },
 ];
 
+const catalogueListingCount = categories.reduce((total, category) => total + category.count, 0);
+
 export default function Home() {
   return (
     <>
@@ -68,17 +70,23 @@ export default function Home() {
 
       <section className="section section-categories">
         <div className="container">
-          <div className="section-heading-row">
-            <div>
+          <div className="section-heading-row catalog-heading-row">
+            <div className="catalog-heading-copy">
               <SectionLabel>Product catalogue</SectionLabel>
-              <h2>Browse by the equipment<br className="desktop-break" /> you’re looking for.</h2>
+              <h2>Explore equipment<br className="desktop-break" /> by category.</h2>
             </div>
-            <Link to="/products" className="text-link">View all listed products <ArrowRight size={16} aria-hidden="true" /></Link>
+            <div className="catalog-heading-aside">
+              <div className="catalog-summary" role="group" aria-label={`${catalogueListingCount} product listings across ${categories.length} categories`}>
+                <span className="catalog-summary-number" aria-hidden="true">{catalogueListingCount}</span>
+                <span className="catalog-summary-copy">public listings<br /><strong>{categories.length} categories</strong></span>
+              </div>
+              <Link to="/products" className="catalog-browse-link">View all products <ArrowRight size={15} aria-hidden="true" /></Link>
+            </div>
           </div>
           <div className="category-grid">
             {categories.map((category) => <CategoryCard key={category.slug} category={category} />)}
           </div>
-          <p className="content-caveat">Categories and counts reflect listings found on Kiran Automation’s current public website; confirm current availability and details with the company.</p>
+          <p className="content-caveat">Listings and category counts reflect the public-site snapshot reviewed for this preview. Confirm current specifications and availability with Kiran Automation.</p>
         </div>
       </section>
 

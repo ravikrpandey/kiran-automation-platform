@@ -66,3 +66,10 @@ No new server, database, API, authentication provider, analytics provider, CMS, 
 ## Delivery boundary
 
 Deliver a tested WebDev preview and an audit/handover report. Record completed, partial, blocked and validation-pending outcomes. The preview is not a replacement production website and will not be published to Kiran’s domain. Deployment and any change to live URLs, forms, accounts, APIs or data require authorized source/backend access and a separate explicit production release decision.
+
+
+## Follow-up refinement request (23 October 2026)
+
+The homepage catalogue section should replace “Browse by the equipment you’re looking for.” with a clearer, buyer-oriented line: **“Explore equipment by category.”** Supporting copy may summarize the six categories and 20 audited listings as a snapshot of the current public catalogue, while reminding buyers to confirm technical fit and availability with Kiran.
+
+Polish the overall visual feel consistently across the homepage and internal page templates: strengthen heading hierarchy, create more intentional catalogue imagery and card surfaces, refine the full-catalogue path/filter controls, and give repeated content sections a clearer rhythm. Preserve the supplied Kiran wordmark, established reference-aligned red/black/white palette and Lexend Deca/Roboto families, real first-party product imagery, verified content and existing routes/account/enquiry handoffs. Keep the work responsive, accessible, restrained, and preview-only; do not add invented product claims, substitute assets, new form behavior, or publish to production.

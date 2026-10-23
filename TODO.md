@@ -65,3 +65,10 @@ Status: **Completed with partial and awaiting-verification items; requested refe
 - Match the measured reference type and palette: Lexend Deca for headings, Roboto for body/interface text, reference red `#E90130` with black/white/light-gray neutrals; retain the supplied logo’s own red. Use accessible contrast for small text and controls.
 - Keep the implementation adapted rather than copied: do not use the Publicis Sapient logo, name, copy, proprietary graphics, customer stories or exact branded layouts.
 - Preserve route behavior, authentic imagery, existing live-form/account handoffs, preview-only `noindex` policy and no-production-publication boundary; this request is a visual and logo update, not authorization to change business workflows or release the production website.
+
+
+## 9. Improve catalogue messaging and refine the whole-site visual feel — Completed for the preview
+
+- Replace the homepage Product catalogue headline “Browse by the equipment you’re looking for.” with clearer, more polished copy. Make the section immediately explain how to explore Kiran’s listed equipment.
+- Make the entire project’s look and feel better across the homepage, catalogue, product categories, product details and other internal page templates, on desktop and mobile. Improve hierarchy, spacing, image framing, cards and navigation/filter presentation consistently rather than changing only the named heading.
+- Preserve the supplied Kiran Automation wordmark, reference-aligned red/black/white palette and Lexend Deca/Roboto typography, genuine product imagery, verified Kiran content, useful routes and existing live enquiry/account handoffs. Do not invent claims or specifications, break responsive/accessibility behavior, add unsupported workflow features, or publish to production.
