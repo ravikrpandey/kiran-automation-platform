@@ -1,6 +1,6 @@
 # Project outcomes and acceptance criteria
 
-Status: **Completed with partial and awaiting-verification items**. This project is an unpublished preview only. Keep each outcome and its acceptance criteria together when updating status.
+Status: **Completed with partial and awaiting-verification items; requested reference-style brand update completed.** This project is an unpublished preview only. Keep each outcome and its acceptance criteria together when updating status.
 
 ## 1. Evidence-led audit, reference translation, and prioritized handover record — Completed (public audit scope; repository/backend not available)
 
@@ -17,7 +17,7 @@ Status: **Completed with partial and awaiting-verification items**. This project
 - Document a readable responsive typography scale for display/hero, page and section headings, cards, body/support copy, navigation, buttons, labels/controls and product specifications/technical metadata, including weights, responsive sizes, line heights, letter spacing and maximum text widths.
 - Document container widths, grid/column behavior, spacing scale, section rhythm, card padding, radii, borders/dividers, image aspect ratios, responsive breakpoints, navigation heights and button dimensions. Apply systematic values consistently.
 - Build reusable, stateful UI patterns as relevant to the available verified content: header and mobile navigation, hero/section headings, product/application/solution cards, product imagery, technical information, contextual process/evidence, FAQs, enquiry link/bridge, breadcrumbs, CTAs and footer. Provide appropriate default, hover, focus, active, disabled, loading and error states; do not imply unavailable behavior.
-- Use original Kiran identity and engineering content. The approved direction is precision industrial editorial: orange engineering-rule accents, clear section metadata, asymmetric editorial layouts, readable system sans-serif, warm near-white surfaces and restrained motion. Keep Publicis Sapient a quality benchmark only.
+- Use original Kiran identity and engineering content. The first preview direction was precision industrial editorial with orange accents; this was superseded by the user's later request recorded in outcome 8. The current visual source of truth is the reference-aligned red/black/white palette and Lexend Deca/Roboto type, adapted for Kiran rather than copied. Keep Publicis Sapient a quality benchmark only.
 
 ## 3. Useful route-preserving information architecture and page set — Completed
 
@@ -57,3 +57,11 @@ Status: **Completed with partial and awaiting-verification items**. This project
 - Deliver the audit report, reference analysis/adaptation matrix, prioritized backlog, proposed sitemap/navigation, homepage wireframe and rationale, internal-page specifications, documented design system, verified revised copy, implemented preview, reusable product/solution templates as supported, SEO/accessibility recommendations/implementation, performance/technical report, functional checklist/results, before/after screenshots where available, changed files/configuration, deployment/rollback guidance, assumptions, missing business content, dependencies and validation results.
 - Mark each feature **completed**, **partially completed**, **blocked** or **awaiting verification**, with evidence. Report limitations precisely, including no source/backend/CMS access, untested form submission, unavailable production integration and any unavailable mobile/browser measurement.
 - No live deployment, domain switch, destructive change, migration, real form/account integration or write/delete against business data is authorized. Do not claim the production site has been modified or deployed. Explain the authorization and access needed for a later production release.
+
+## 8. Apply the supplied Kiran wordmark and the requested whole-site reference style — Completed for the preview
+
+- Use the Kiran Automation logo image supplied by the user in this request as the website wordmark across the preview, including the header and footer, and as the WebDev project logo. Preserve its colors and proportions.
+- Restyle the entire existing Kiran Automation preview so its colors, fonts and overall visual feel align with the Publicis Sapient reference while the Kiran Automation identity, verified text, products, images, routes and functions remain Kiran Automation.
+- Match the measured reference type and palette: Lexend Deca for headings, Roboto for body/interface text, reference red `#E90130` with black/white/light-gray neutrals; retain the supplied logo’s own red. Use accessible contrast for small text and controls.
+- Keep the implementation adapted rather than copied: do not use the Publicis Sapient logo, name, copy, proprietary graphics, customer stories or exact branded layouts.
+- Preserve route behavior, authentic imagery, existing live-form/account handoffs, preview-only `noindex` policy and no-production-publication boundary; this request is a visual and logo update, not authorization to change business workflows or release the production website.

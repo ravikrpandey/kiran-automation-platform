@@ -26,10 +26,10 @@ export function SiteHeader() {
           <Link to="/" className="brand-link" aria-label="Kiran Automation home" onClick={closeMenu}>
             <img
               className="brand-logo"
-              src="/manus-storage/kiran-logo_1a516b2f.png"
+              src="/manus-storage/kiran-automation-logo_d1894f6b.png"
               alt="Kiran Automation — Wings of Innovation"
-              width="170"
-              height="72"
+              width="1849"
+              height="366"
             />
           </Link>
           <button
@@ -70,7 +70,7 @@ export function SiteFooter() {
       <div className="container footer-main">
         <div className="footer-brand-block">
           <Link to="/" className="footer-logo-link" aria-label="Kiran Automation home">
-            <img src="/manus-storage/kiran-logo_1a516b2f.png" alt="Kiran Automation — Wings of Innovation" width="170" height="72" loading="lazy" />
+            <img src="/manus-storage/kiran-automation-logo_d1894f6b.png" alt="Kiran Automation — Wings of Innovation" width="1849" height="366" loading="lazy" />
           </Link>
           <p>Robotic automation and engineered equipment, as described in Kiran Automation’s current public catalog.</p>
           <a className="footer-email" href={`mailto:${company.email}`}>{company.email} <ArrowUpRight size={14} aria-hidden="true" /></a>

@@ -28,7 +28,7 @@ export default function Home() {
             <h1>Automation built around the work your line needs to do.</h1>
             <p className="hero-lede">Kiran Automation’s existing website describes turnkey robotic solutions for electronics manufacturing. Explore the applications and equipment currently listed, then discuss your process with the team.</p>
             <div className="hero-actions">
-              <Link className="button button-orange" to="/enquiry">Discuss your requirement <ArrowUpRight size={16} aria-hidden="true" /></Link>
+              <Link className="button button-red" to="/enquiry">Discuss your requirement <ArrowUpRight size={16} aria-hidden="true" /></Link>
               <Link className="text-link" to="/products">Explore products <ArrowRight size={16} aria-hidden="true" /></Link>
             </div>
             <p className="hero-note">Preview based on Kiran Automation’s current public information</p>
