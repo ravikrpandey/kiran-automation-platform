@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+# This project is an unpublished review preview. All page HTML also carries noindex, nofollow.
+# Replace this policy only when an owner-approved production origin and crawl policy are available.

@@ -1,0 +1,113 @@
+# Kiran Automation — audit and preview handover
+
+- **As of:** 23 October 2026
+- **Status:** Review-ready, unpublished redesign preview. The live Kiran Automation site has not been modified or deployed.
+- **Project:** `/home/ubuntu/kiranweb`
+- **Full public-page audit:** [Audit synthesis](/home/ubuntu/site-audit/audit-synthesis.md)
+- **Approved implementation plan:** [plan.md](/home/ubuntu/kiranweb/plan.md) · **Outcome checklist:** [TODO.md](/home/ubuntu/kiranweb/TODO.md)
+
+## Executive result and limits
+
+The preview is a responsive, static React/TypeScript/Vite site that reuses Kiran Automation’s real logo and selected first-party equipment/product imagery. It preserves the observed company, services, category, product-detail, enquiry, contact and career paths. It contains all six observed categories and the 20 catalog entries visible during the audit, with a reusable detail template. The preview does not guess product specifications or accept customer data. Enquiry, career and account actions are clearly handed off to the existing public website.
+
+This was a read-only audit of the public website plus work in a separate initialized WebDev project. No source repository or access to Kiran’s server, CMS, database, APIs, form processor, mail delivery, analytics, authentication, file storage, deployment history or production credentials was provided. Public technology fingerprints are signals only, not a full architecture or security assessment. Forms were not submitted. No production release or rollback was attempted.
+
+## Prioritized audit findings
+
+Severity/priority codes below are project triage, not security-incident classifications. The complete page-by-page evidence, observed facts versus assessments, and detailed coverage limits are in the linked audit synthesis.
+
+| Priority | Affected page(s) | Verified observation / risk | Business impact | Recommendation | Preview status |
+|---|---|---|---|---|---|
+| P0 | About Us; Products; Services; Enquiry; six category pages | Public markup restricts or disables browser zoom. | Accessibility and mobile readability risk. | Remove zoom restrictions and validate reflow at zoom. | **Addressed in preview:** standard `width=device-width, initial-scale=1.0`; no maximum/user-scale restriction. Zoom was not tested at 200–400%. |
+| P0 | `/enquiry` | Required quote fields were visible without associated labels; the form was not submitted in the audit. | Screen-reader identification and lead conversion risk. | Label controls, preserve validation/status/privacy behavior, test the live workflow. | **Blocked for integration:** preview explicitly links to the current live form instead of recreating or simulating submission. Existing form semantics remain to be verified by its owner. |
+| P0 | `/about-us` | Two visible team-phone labels pointed to the same placeholder-looking `tel:+9-000-999-9999`. | Trust and contact-conversion risk. | Confirm real business numbers before release. | **Addressed in preview:** no phone number is reproduced; email/address are marked as live-site details requiring confirmation. |
+| P1 | `/products` and all six categories | Product images had empty/weak alternative text and commonly linked to raw PNG files, not product details. | Unnamed image links and breaks in product discovery. | Give images meaningful alternatives; send both image/title links to a verified product page. | **Addressed:** descriptive image text and 20 real detail destinations. All 24 referenced logo/equipment assets tested through project storage returned HTTP 200 with image content types. |
+| P1 | Categories; Products; Services; Enquiry | Generic page titles/headings, missing descriptions/canonicals, weak document landmarks/language and skipped heading levels were observed. | Poor orientation, accessibility structure and search/social differentiation. | Use unique copy/metadata, one H1, logical headings, `lang`, `<main>`, breadcrumbs and owner-origin URLs. | **Addressed in preview where possible:** 34 route snapshots have unique/route-appropriate titles and descriptions, one H1 each, English language, one main landmark, breadcrumbs and noindex. Production canonicals and sitemap are deliberately withheld until an authorized production origin/route map exists. |
+| P1 | Homepage; `/services`; `/about-us`; `/contact-us`; `/enquiry` | Placeholder/repetitive service copy, unsupported “leader” wording, CTAs whose destination was unclear, and the visible typos “Your Massage” and “techincal” were found. | Credibility and enquiry friction. | Replace filler with evidence-qualified descriptions; correct copy; direct CTAs to real destinations. | **Addressed in preview copy/navigation:** application/category content is attributed to the current public site; links state when the live form is the next step. No unsupported customer/project proof was added. |
+| P1 | Other Equipment product details | The ELECTRICAL PANEL detail contained residential-style copy; a PDF attached to the turntable appeared to be a recruitment notice rather than product documentation. | Buyers could receive misleading product information or a mismatched document. | Product-owner verification; review and replace/remove the document. | **Partially addressed:** no inherited prose/download/specification was copied; the two entries carry an owner-review warning. Product identity/application still needs confirmation. |
+| P1 | Inspection & Testing product details | EPSON/Kinova naming/model wording needs clarification. | Risk of confusing manufacturer, robot model or configuration. | Confirm title, supplier, model and integration relationship with the product owner. | **Partially addressed:** both listings are flagged and only audited listing names/images are shown. No manufacturer, compatibility or specification claim is added. |
+| P1/P2 | `/products/robotics-`; `/products/material-processing`; shared navigation/footer | Placeholder `#` social links and duplicate navigation IDs were observed. | Dead controls, weak names and fragile accessibility/script relationships. | Remove nonexistent social destinations and use one unique, labeled navigation control. | **Addressed in preview:** real navigation IDs are unique; unsupported social links are omitted. |
+| P1/P2 | Public `/robots.txt`, `/sitemap.xml` | Both returned HTTP 404 generic pages in public checks during the audit. | Crawl discovery and indexing configuration are unclear. | Recheck under production ownership; add a valid sitemap and crawl policy. | **Partial:** preview has a noindex HTML policy and `client/public/robots.txt`, but no production sitemap/canonical/robots policy is claimed. |
+| P2 | `/contact-us`; shared styles | Original audit noted possible contrast concerns; no rendered measurements were available. | May affect low-vision users. | Measure actual foreground/background pairs and verify states. | **Partial:** selected preview text pairs were measured; this is not an exhaustive WCAG audit. |
+| P2 | Public responsive experience | Existing mobile behavior could not be verified: the prior automated public-site attempt received browser-check 403 responses. | Unknown live mobile usability. | Test the authorized staging/live system once access is available. | **Addressed for the preview only:** measured at 320, 390, 768 and 1440px; no horizontal overflow at those widths. |
+
+Public HTML/HTTP also exposed `X-Powered-By: PHP/7.2.34`, Bootstrap CSS links and jQuery 1.9.1. These do **not** establish the complete stack, patch state or an exploitable vulnerability. No penetration test, dependency audit or backend inspection was performed.
+
+## Reference analysis and adaptation
+
+| Publicis Sapient experience principle observed | Kiran Automation adaptation |
+|---|---|
+| Lead with a clear benefit and guide a buyer from problem to next step. | Start with a manufacturing-task hero, then show published applications, catalog categories and an explicitly live enquiry link. |
+| Use editorial hierarchy and whitespace to keep complex propositions readable. | Use asymmetric image/copy composition, restrained section labels, short reading widths and a visible page rhythm; use an industrial neutral/orange palette, not the reference brand. |
+| Make navigation shallow and repeated patterns consistent. | Provide a compact Products menu, six real categories, product search, breadcrumbs, repeatable detail pages and a consistent footer. |
+| Use relevant visual storytelling and evidence. | Use only images already published by Kiran; avoid invented customer logos, testimonials and case studies. Flag ambiguous listings rather than filling gaps. |
+| Make calls to action contextual and purposeful. | Use category/product-adjacent catalogue links, a project-enquiry path and visible handoff notices for external live workflows. |
+| Keep interactions restrained and responsive. | Use a keyboard-operable disclosure/mobile menu, native FAQ details, brief state feedback and reduced-motion CSS; no parallax, scroll-jacking, autoplay or popups. |
+
+No Publicis Sapient logo, copy, images, exact layout or proprietary creative assets were copied.
+
+## Proposed sitemap and page specifications
+
+- **Home:** `/` — positioning, published application areas, six catalog categories, three real featured listings, a clearly labeled suggested buyer conversation, qualified FAQs, enquiry CTA.
+- **Company:** `/about-us` and `/who-we-are` — same verified company content, distinct route metadata; no unverified staff/phone claims.
+- **Applications & Services:** `/services` — ten application areas from Kiran’s public site; explicitly described as published listings, not verified outcomes.
+- **Catalog:** `/products` — searchable 20-item listing, category links and a useful empty state. Category templates preserve `/products/industrial-furniture`, `/products/material-handling`, `/products/robotics-`, `/products/inspection-and-testing`, `/products/material-processing` and `/products/other-equipment`.
+- **Product details:** `/product_details/{real public slug}` — reusable title/category/image template, source-context note, related products and enquiry CTA. No guessed dimensions, capacities, tolerances, cycle times, prices, compatibility, certification or availability.
+- **Contact and workflow bridges:** `/contact-us`, `/enquiry`, `/career` — verified public email/address with owner-confirmation note; direct new-tab handoffs to Kiran’s existing enquiry and career pages. Login, register and password reset remain external live links rather than a new auth system.
+- No new blog, resource center, case study, form endpoint, social account, policy page or unsupported industry page was added.
+
+**Route manifest:** 15 declared page patterns at `/manus-routes.json`, including the real dynamic product route. The static build emits 34 route-specific HTML snapshots (14 non-product content paths plus 20 verified product routes) and a `404.html` page. The 404 hosting behavior itself was not verified on a production host.
+
+## Homepage wireframe and rationale
+
+1. Skip link, verified logo and compact navigation with category disclosure, account handoff and prominent enquiry CTA.
+2. Asymmetric hero: source-qualified headline/copy, one real equipment rendering, “Discuss your requirement” and product discovery.
+3. Published application areas in a scannable two-column list; each leads to Services.
+4. Six category cards with authentic images and audited listing counts.
+5. Three genuine catalog examples linked to their existing product details.
+6. A clearly labeled **suggested buyer conversation**, not a claim about Kiran’s project methodology.
+7. Three qualified FAQs on application discussion, preview specifications and how to enquire.
+8. Final conversion CTA and a compact footer with source-qualified contact/navigation/account routes.
+
+There is no synthetic trust strip, testimonial, customer-logo wall, metric or unverified delivery promise.
+
+## Design system (implemented tokens)
+
+**Brand and color:** the existing Kiran logo is retained; its orange was sampled from the mark. Tokens: ink `#20201D`, warm paper `#F6F5F1`, white `#FFFFFF`, muted text `#676962`, divider `#D9D8D1`, logo orange `#D7650A`, darker text/action orange `#A64700`, orange pale `#F3E4D7`, success `#246849`, warning `#8A4C08`, error `#A33128`. The brighter logo orange is used only for decorative rules/dots/shadows, not small text. No pervasive gradient.
+
+**Typography:** system sans stack `Inter, Segoe UI, Roboto, Helvetica, Arial` (no third-party font download); monospace is reserved for small numeric metadata. Hero H1 is `clamp(42px, 5vw, 67px)`, 1.04 line-height, weight 560, tracking `-.055em`; page H1 `clamp(38px, 5.2vw, 62px)`, 1.05, weight 540; section H2 `clamp(32px, 3.6vw, 48px)`, 1.14, weight 540, tracking `-.045em`. Body copy is 16px/1.65; hero lead 16–18px/1.7; cards 15–17px; metadata 10–13px with tracked uppercase labels. Prose width is bounded by layout rather than stretched across the screen.
+
+**Layout and components:** max-width 1240px; default 24px gutters, 20px at widths ≤780px and 18px at ≤520px. Section padding is 100px desktop, 75px tablet and 64px small-screen; breakpoints are 1020/780/520px. Category/product grids are three columns desktop, two columns tablet, then compact side-by-side image/copy cards on phones. Controls have square/low-radius edges; cards use restrained borders. Primary buttons are at least 48px, project nav CTA 44px, mobile menu/search/category/footer targets at least 44px, native FAQ summaries at least 60px. Focus is a 3px dark-orange outline; hover/active/expanded/empty/review states are present; reduced-motion preferences minimize transitions and disable smooth scrolling. Disabled CSS is defined; loading/error/success form states are not invented because no asynchronous preview form exists.
+
+Selected color-contrast ratios were calculated: ink/paper 14.97:1; muted/paper 5.10:1; muted/alternate surfaces 4.62–4.75:1; dark orange/paper 5.46:1; white/primary CTA 5.96:1; footer links/footer 8.43:1; footer email/footer 6.78:1. This samples the used text pairs; it does not certify the whole interface to WCAG 2.2 AA.
+
+## Copy and catalog integrity
+
+Representative homepage copy: **“Automation built around the work your line needs to do.”** Supporting text explicitly attributes turnkey robotics/electronics-manufacturing positioning to Kiran’s current site. Application labels reflect the observed list, including PCB handling/testing, SMT loading, automated screwing, robotic soldering, gluing/dispensing, small-part feeding, vision inspection, label pasting, material handling, end-of-line processes and palletizing.
+
+Product cards/details use real catalog titles, actual existing slugs, categories and first-party listing images. Two EPSON entries, Heavy-Duty Compact Turntable and Electrical Panel are flagged for review for the reasons above. Publicly listed contact email `info@kiranautomation.com` and address `WZ 405 Hari Nagar, New Delhi` are visibly marked as awaiting company confirmation before release. No phone number, prices, specifications, ratings, guarantees, certifications, customers or results are added.
+
+## Technical, SEO, accessibility and performance report
+
+- **Stack and config:** initialized React 19, TypeScript, Vite, Wouter and existing Tailwind dependencies; no new dependency; static-only (`server:false`, `database:false`). Runtime preview port 3000. `pnpm dev:static` starts local preview. `pnpm build:static` creates `dist/public` and statically renders actual routes. Production config declares pinned `pnpm@10.18.0` install then `build:static`.
+- **Initial HTML/SEO:** the routes are pre-rendered and hydrated; titles/descriptions, H1s, English document language, Open Graph/Twitter title/description basics and source-qualified Organization/Product/BreadcrumbList JSON-LD are present. Structured data omits offers, reviews, ratings and availability. `robots.txt` currently allows crawling while every page declares `noindex, nofollow`; this is an unpublished preview policy, not a production crawl configuration. No `canonical`, `og:url`, `og:image` or production sitemap is emitted because production origin and deployment are unknown. Search Console/readiness/redirects remain owner-dependent.
+- **Accessibility basics verified:** standard zoom-capable viewport; keyboard Tab reaches a visible skip link; focus outline measured at 3px; keyboard activation of mobile menu, product disclosure and FAQs; semantic main/nav/breadcrumb landmarks; source-based alt text; 44px mobile targets measured; reduced-motion CSS. No automated axe/screen-reader audit or 200–400% zoom audit was run; full WCAG conformance remains **partial/awaiting specialist review**.
+- **Responsive/browser validation:** the built static output was served locally in Chromium, with first-party storage media proxied from the active preview. At 1440, 768, 390 and 320px the homepage had exactly one H1, all 13 images loaded and `scrollWidth` equaled the viewport width. At laptop/smaller-desktop widths of 1280 and 1024px, the 20-item catalog also had one H1 and no horizontal overflow, using three columns at each width. About/menu, the 20-item catalog search filtered to one conveyor result, Robotics category, a dynamic product detail/owner warning/structured data, enquiry bridge and contact email were exercised at mobile width. No browser console/page errors, failed requests, ≥400 responses or duplicate IDs were recorded. All 24 unique referenced brand/product/equipment images returned HTTP 200 with image content types. Static HTML checks passed for all 34 route snapshots: title, description, preview noindex and one H1 each. These are focused browser checks, not exhaustive link crawling or live-form validation.
+- **Build/performance:** final build succeeded. Emitted JS: 367.75 KiB raw / 109.23 KiB gzip; CSS: 118.52 KiB raw / 20.94 KiB gzip; HTML entry 1.22 KiB raw / 0.51 KiB gzip. No Lighthouse, Core Web Vitals, real-user, bandwidth, security or penetration-test measurements were performed. Vite prints one non-fatal notice for the starter’s `/api/platform/config.js` non-module script; that file is emitted and the browser tests report no failed request.
+
+## Screenshots and QA artifacts
+
+- Before (existing live site, 893×768): [current-site screenshot](/home/ubuntu/screenshots/kiranautomation_2026-10-23_05-45-38_3104.webp)
+- After, same viewport: [preview top fold 893×768](/home/ubuntu/site-audit/preview-after-fold.png)
+- After, full pages: [desktop 1440px](/home/ubuntu/site-audit/preview-desktop-home.png), [tablet 768px](/home/ubuntu/site-audit/preview-tablet-home.png), [mobile 390px](/home/ubuntu/site-audit/preview-mobile-home.png)
+- [Browser smoke results](/home/ubuntu/site-audit/preview-smoke-results.json) · [Referenced-asset response checks](/home/ubuntu/site-audit/asset-check-results.json)
+
+## Release, deployment and rollback guidance
+
+**No production release is authorized or performed.** Project publication auto-publish is off, and the configured WebDev project is a separate preview. The owner should first confirm company contact data, product names/models/specifications, the four flagged product listings, images/usage rights, application copy, all public forms/account behavior, analytics/legal/social details, canonical host and desired redirects. Then provide the authorized source repository, its build/deployment/runbook and a staging environment; integrate the preview without replacing PHP/backend functionality; get content/accessibility/legal approvals; test live form, career/upload and authentication flows; map old routes and redirects; configure production canonical URLs, `robots.txt`, sitemap and social image; take an existing-site backup; publish only through the approved release process; and smoke-test routes/forms after deploy.
+
+For this project, the configured build command is `npx --yes pnpm@10.18.0 install --frozen-lockfile && npx --yes pnpm@10.18.0 build:static`, output directory `dist/public`. That command only creates site files; the target production host/routing and its interaction with the existing PHP site are unknown, so do not upload or domain-switch without an owner-approved integration plan. No live rollback is currently needed because no production change happened. If a later authorized WebDev deployment is used, keep the previous published checkpoint and use WebDev version history’s rollback after smoke-test failure; if the existing external PHP host remains the target, its own documented backup/rollback procedure must be supplied and followed. There is no connected source/deployment mapping here from which to safely roll back Kiran’s live site.
+
+### Changed project files
+
+`plan.md`, `TODO.md`, `AUDIT-AND-HANDOVER.md`, `app.config.ts`, `package.json`; `client/index.html`, `client/public/manus-routes.json`, `client/public/robots.txt`; `client/src/App.tsx`, `client/src/main.tsx`, `client/src/index.css`; `client/src/components/SiteShell.tsx`, `client/src/components/StructuredData.tsx`; `client/src/content/siteData.ts`; `client/src/lib/metadata.ts`; `client/src/pages/Home.tsx`, `client/src/pages/SitePages.tsx`; and `scripts/prerender.tsx`. Project settings retain static-only features; no server/database integration, user-data storage or real form handling was added.
