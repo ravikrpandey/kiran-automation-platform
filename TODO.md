@@ -1,6 +1,6 @@
 # Project outcomes and acceptance criteria
 
-Status: **Visual redesign preview and its earlier GitHub push complete; full-stack code implemented and locally validated, but its GitHub update, database-backed verification and public deployment remain pending.** Keep completed preview outcomes distinct from new full-stack acceptance criteria.
+Status: **Visual redesign and full-stack code are pushed to the public GitHub `main` (commit `9156fbc`) and the bound project `main`; local implementation checks pass, but database-backed verification and public deployment remain pending.** Keep completed preview outcomes distinct from new full-stack acceptance criteria.
 
 ## 1. Evidence-led audit, reference translation, and prioritized handover record — Completed (public audit scope; repository/backend not available)
 
@@ -90,3 +90,12 @@ Status: **Visual redesign preview and its earlier GitHub push complete; full-sta
 - Do not submit tests to Kiran Automation's current live forms. Do not claim the new independent form behavior is identical to the unobservable old backend; reproduce only the publicly observed fields and choices. Keep privacy/retention copy marked for owner approval before production.
 - Preserve the supplied Kiran logo, current reference-aligned visual system, verified catalog content, useful page paths and responsive accessibility while adding functional forms and administration.
 - Do not deploy until Render/Aiven accounts, database connection secrets, and private file-storage settings are authorized and configured. No production domain release is included in this work.
+
+
+## Current implementation status — 2026-10-27
+
+- **Source delivery:** Full-stack implementation commit `9156fbc` is pushed to the user's public GitHub `main` and the bound project `main`. Automatic public publication remains off.
+- **Local checks passed:** `pnpm check`, `pnpm test` (6 tests), `pnpm build`, route-manifest and local API health checks. Production-header smoke test verified `X-Frame-Options: SAMEORIGIN` and CSP `frame-ancestors 'self'`; the embedded Preview keeps those framing restrictions off.
+- **Preview form smoke test:** A synthetic enquiry on the unpublished preview returned an accessible error when MySQL was unavailable. No database connection was configured and no lead was stored; the live Kiran forms were not touched.
+- **Not yet verified:** Fresh Aiven/MySQL migrations and lead writes, admin sign-in/dashboard against MySQL, R2 career uploads and authorized downloads, and Render deployment. Database, R2 and Render credentials are absent from this session.
+- **Release gate:** The privacy notice/controller identity and retention/deletion policy still require owner review before enabling public collection of personal details or resumes. SMTP remains intentionally unconfigured; the UI does not promise email acknowledgement.
