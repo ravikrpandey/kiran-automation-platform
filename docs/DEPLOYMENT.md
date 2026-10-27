@@ -1,5 +1,9 @@
 # Deployment and configuration — temporary full-stack demo
 
+## GitHub Pages static preview (frontend only)
+
+The user requested a public GitHub Pages version for the visual redesign. The repository workflow builds the static React site with its `/kiran-automation-platform/` subpath and deploys it to `https://ravikrpandey.github.io/kiran-automation-platform/` after GitHub Actions succeeds. This host does not run Express, MySQL, or private R2 storage. In that static build, enquiry/career submissions, resume uploads, administrator sign-in and lead management are disabled; the pages state that no form data is collected. The build remains `noindex`. This is not the full-stack Render demo or a production release.
+
 ## Scope and status
 
 This guide describes the independent demo: Node.js 22/Express serves the built React/Vite frontend and `/api/*` from one origin; Drizzle/MySQL uses a new Aiven service; career resumes use a private Cloudflare R2 bucket. Only fresh demo submissions are stored. There is no connection to the legacy PHP system, account migration, production domain or DNS change.

@@ -9,6 +9,7 @@ const root = process.cwd();
 const publicDirectory = path.join(root, "dist", "public");
 const templatePath = path.join(publicDirectory, "index.html");
 const template = await fs.readFile(templatePath, "utf8");
+const routeBase = process.env.GITHUB_PAGES === "true" ? "/kiran-automation-platform" : "";
 const vite = await createServer({
   configFile: path.join(root, "vite.config.ts"),
   server: { middlewareMode: true },
@@ -37,7 +38,7 @@ try {
     const metadata = route === "/404"
       ? { title: "Page not found | Kiran Automation", description: "This address is not part of the Kiran Automation preview." }
       : getPageMetadata(route);
-    const markup = renderToString(createElement(Router, { ssrPath: route, children: createElement(App) }));
+    const markup = renderToString(createElement(Router, { base: routeBase, ssrPath: `${routeBase}${route}`, children: createElement(App) }));
     let html = template
       .replace('<div id="root"></div>', `<div id="root">${markup}</div>`)
       .replace(/<title>[^<]*<\/title>/i, `<title>${escapeHtml(metadata.title)}</title>`)

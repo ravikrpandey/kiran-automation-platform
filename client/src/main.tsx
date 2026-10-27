@@ -7,7 +7,7 @@ const container = document.getElementById("root");
 if (!container) throw new Error("Missing #root application container");
 
 const application = (
-  <Router ssrPath={window.location.pathname}>
+  <Router base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={window.location.pathname}>
     <App />
   </Router>
 );

@@ -1,6 +1,6 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
-import { applications, categories, featuredProducts } from "@/content/siteData";
+import { applications, categories, featuredProducts, publicAsset } from "@/content/siteData";
 import { CategoryCard, ProductCard, SectionLabel } from "@/components/SiteShell";
 
 const faqs = [
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "How do I request a quotation?",
-    answer: "Use this site’s enquiry form to submit a fresh request. Submissions are stored for review; email acknowledgement is not configured.",
+    answer: import.meta.env.VITE_STATIC_PAGES_DEMO === "true" ? "The GitHub Pages preview cannot submit or store enquiries. Contact Kiran Automation directly using the published company contact details." : "Use this site’s enquiry form to submit a fresh request. Submissions are stored for review; email acknowledgement is not configured.",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <div className="hero-visual">
             <div className="hero-image-frame">
-              <img src="/assets/company/03.jpg" alt="Kiran Automation home machine" width="1600" height="770" fetchPriority="high" />
+              <img src={publicAsset("/assets/company/03.jpg")} alt="Kiran Automation home machine" width="1600" height="770" fetchPriority="high" />
             </div>
             <div className="hero-caption"><span className="caption-dot" />Industrial automation equipment</div>
             <div className="hero-side-note" aria-hidden="true">DESIGN · INTEGRATION · AUTOMATION</div>
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="section section-approach">
         <div className="container approach-grid">
           <div className="approach-image">
-            <img src="/assets/company/service-4.jpg" alt="Kiran Automation robot cell" width="670" height="500" loading="lazy" decoding="async" />
+            <img src={publicAsset("/assets/company/service-4.jpg")} alt="Kiran Automation robot cell" width="670" height="500" loading="lazy" decoding="async" />
             <span className="image-index">KIRAN AUTOMATION · EQUIPMENT IMAGE</span>
           </div>
           <div className="approach-copy">

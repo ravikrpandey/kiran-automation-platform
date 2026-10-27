@@ -7,6 +7,7 @@ import {
   company,
   getCategoryBySlug,
   legacyBase,
+  publicAsset,
   products,
   type Category,
   type Product,
@@ -36,7 +37,7 @@ export function AboutPage() {
             <Link to="/services" className="text-link">See listed application areas <ArrowRight size={15} aria-hidden="true" /></Link>
           </div>
           <figure className="about-image">
-            <img src="/assets/company/04.jpg" alt="Kiran Automation company machine" width="723" height="823" loading="lazy" decoding="async" />
+            <img src={publicAsset("/assets/company/04.jpg")} alt="Kiran Automation company machine" width="723" height="823" loading="lazy" decoding="async" />
             <figcaption>Equipment image published on Kiran Automation’s current website.</figcaption>
           </figure>
         </div>
@@ -174,8 +175,8 @@ export function EnquiryPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Enquiry" }]} />
-      <PageIntro eyebrow="Business enquiry" title="Tell Kiran what the process needs to do." description="For a useful first conversation, be ready to describe the operation, part, current process and the equipment or application you would like to discuss." />
-      <section className="section bridge-section"><div className="container bridge-container"><div className="intake-panel"><EnquiryForm /></div><p className="bridge-footnote">Your details are stored for review. Email acknowledgement is not configured.</p></div></section>
+      <PageIntro eyebrow="Business enquiry" title="Tell Kiran what the process needs to do." description={import.meta.env.VITE_STATIC_PAGES_DEMO === "true" ? "The static GitHub Pages preview cannot accept enquiries. Contact Kiran Automation directly using the published company details." : "For a useful first conversation, be ready to describe the operation, part, current process and the equipment or application you would like to discuss."} />
+      <section className="section bridge-section"><div className="container bridge-container"><div className="intake-panel"><EnquiryForm /></div><p className="bridge-footnote">{import.meta.env.VITE_STATIC_PAGES_DEMO === "true" ? "No information is collected or stored by this static preview." : "Your details are stored for review. Email acknowledgement is not configured."}</p></div></section>
       <section className="section enquiry-context"><div className="container"><SectionLabel>Helpful context</SectionLabel><h2>Make the requirement specific.</h2><div className="context-grid"><article><span>01</span><h3>The operation</h3><p>Describe the task, current process and where it happens in the line.</p></article><article><span>02</span><h3>The part or product</h3><p>Identify the part being handled, tested, assembled or processed.</p></article><article><span>03</span><h3>The requirement</h3><p>Share constraints or information that may help Kiran assess the request.</p></article></div><p className="content-caveat">These are suggestions for an enquiry, not a promise of project scope or response time.</p></div></section>
     </>
   );
@@ -185,7 +186,7 @@ export function CareerPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Careers" }]} />
-      <PageIntro eyebrow="Careers" title="Apply to Kiran Automation." description="Submit a fresh application with your area of experience and resume. Applications are stored for review; email acknowledgement is not configured." />
+      <PageIntro eyebrow="Careers" title="Apply to Kiran Automation." description={import.meta.env.VITE_STATIC_PAGES_DEMO === "true" ? "Career applications and resume uploads are disabled on this static preview." : "Submit a fresh application with your area of experience and resume. Applications are stored for review; email acknowledgement is not configured."} />
       <section className="section bridge-section"><div className="container bridge-container"><div className="intake-panel"><CareerForm /></div></div></section>
     </>
   );

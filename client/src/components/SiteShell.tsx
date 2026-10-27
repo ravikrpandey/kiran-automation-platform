@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { categories, company, legacyBase } from "@/content/siteData";
+import { categories, company, legacyBase, publicAsset } from "@/content/siteData";
 import { StructuredData } from "./StructuredData";
 
 export function SiteHeader() {
@@ -24,7 +24,7 @@ export function SiteHeader() {
           <Link to="/" className="brand-link" aria-label="Kiran Automation home" onClick={closeMenu}>
             <img
               className="brand-logo"
-              src="/assets/brand/kiran-automation-logo.png"
+              src={publicAsset("/assets/brand/kiran-automation-logo.png")}
               alt="Kiran Automation — Wings of Innovation"
               width="1849"
               height="366"
@@ -68,7 +68,7 @@ export function SiteFooter() {
       <div className="container footer-main">
         <div className="footer-brand-block">
           <Link to="/" className="footer-logo-link" aria-label="Kiran Automation home">
-            <img src="/assets/brand/kiran-automation-logo.png" alt="Kiran Automation — Wings of Innovation" width="1849" height="366" loading="lazy" />
+            <img src={publicAsset("/assets/brand/kiran-automation-logo.png")} alt="Kiran Automation — Wings of Innovation" width="1849" height="366" loading="lazy" />
           </Link>
           <p>Robotic automation and engineered equipment, as described in Kiran Automation’s current public catalog.</p>
           <a className="footer-email" href={`mailto:${company.email}`}>{company.email} <ArrowUpRight size={14} aria-hidden="true" /></a>

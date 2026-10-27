@@ -1,6 +1,6 @@
 # Project outcomes and acceptance criteria
 
-Status: **Visual redesign and full-stack code are pushed to the public GitHub `main` (commit `9156fbc`) and the bound project `main`; local implementation checks pass, but database-backed verification and public deployment remain pending.** Keep completed preview outcomes distinct from new full-stack acceptance criteria.
+Status: **Visual redesign and full-stack source are pushed to the public GitHub `main` and the bound project `main`; GitHub Pages is being prepared as a separate static-only preview at the user's request. Node/MySQL lead storage, private resume handling, database-backed verification and the full-stack Render/Aiven deployment remain pending.** Keep completed preview outcomes distinct from full-stack acceptance criteria.
 
 ## 1. Evidence-led audit, reference translation, and prioritized handover record — Completed (public audit scope; repository/backend not available)
 

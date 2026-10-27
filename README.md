@@ -2,6 +2,10 @@
 
 This repository contains a React/Vite frontend and an independent Node.js/Express + MySQL demo for fresh business enquiries and career applications. The intended demo deployment is Render Free, Aiven MySQL and private Cloudflare R2 for resumes. It does not connect to or migrate the legacy PHP site, customer accounts or existing lead data.
 
+## GitHub Pages static preview
+
+The user-requested GitHub Pages version is a static visual/catalog preview only. GitHub Pages cannot run the Node/MySQL API or private resume storage, so enquiry and career forms, resume uploads, and administrator access are disabled in that build; it collects no submissions. The full-stack Render/Aiven/R2 demo remains separate and is not deployed. Pages builds are kept `noindex` while the public demo and privacy policy are awaiting owner review.
+
 ## Local development
 
 Use Node.js 22 and the repository-pinned pnpm 10.18. Install with `pnpm install --frozen-lockfile`, copy `.env.example` to `.env`, and fill only values for services you control. `pnpm dev` starts Vite on port 3000 and the API on port 4000; `pnpm build` creates the prerendered frontend and bundled Node service. Run `pnpm check` and `pnpm test` for local checks. `pnpm db:migrate` applies the checked-in migrations to `DATABASE_URL`.

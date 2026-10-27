@@ -1,6 +1,7 @@
 import { categories, company, getProductBySlug } from "@/content/siteData";
 
 export type PageMetadata = { title: string; description: string; type: "website" | "product"; robots?: string };
+const staticPagesDemo = import.meta.env.VITE_STATIC_PAGES_DEMO === "true";
 
 const pageMetadata: Record<string, PageMetadata> = {
   "/": {
@@ -30,7 +31,7 @@ const pageMetadata: Record<string, PageMetadata> = {
   },
   "/enquiry": {
     title: "Business Enquiry | Kiran Automation",
-    description: "Submit a fresh business enquiry to Kiran Automation. Email acknowledgement is not configured.",
+    description: staticPagesDemo ? "The GitHub Pages static preview cannot submit or store enquiries." : "Submit a fresh business enquiry to Kiran Automation. Email acknowledgement is not configured.",
     type: "website",
   },
   "/contact-us": {
@@ -40,7 +41,7 @@ const pageMetadata: Record<string, PageMetadata> = {
   },
   "/career": {
     title: "Careers | Kiran Automation",
-    description: "Submit a fresh career application. Resume storage availability is checked before submission.",
+    description: staticPagesDemo ? "Career applications and resume uploads are unavailable on the GitHub Pages static preview." : "Submit a fresh career application. Resume storage availability is checked before submission.",
     type: "website",
   },
   "/privacy": { title: "Privacy Notice | Kiran Automation", description: "Draft privacy notice for review before production.", type: "website" },
