@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1793013999168,
+      "tag": "0000_initial_fresh_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1793016740246,
+      "tag": "0001_notification_not_configured",
+      "breakpoints": true
+    }
+  ]
+}

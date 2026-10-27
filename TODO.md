@@ -1,6 +1,6 @@
 # Project outcomes and acceptance criteria
 
-Status: **Completed with partial and awaiting-verification items; requested reference-style brand update completed.** This project is an unpublished preview only. Keep each outcome and its acceptance criteria together when updating status.
+Status: **Visual redesign preview and its earlier GitHub push complete; full-stack code implemented and locally validated, but its GitHub update, database-backed verification and public deployment remain pending.** Keep completed preview outcomes distinct from new full-stack acceptance criteria.
 
 ## 1. Evidence-led audit, reference translation, and prioritized handover record — Completed (public audit scope; repository/backend not available)
 
@@ -72,3 +72,21 @@ Status: **Completed with partial and awaiting-verification items; requested refe
 - Replace the homepage Product catalogue headline “Browse by the equipment you’re looking for.” with clearer, more polished copy. Make the section immediately explain how to explore Kiran’s listed equipment.
 - Make the entire project’s look and feel better across the homepage, catalogue, product categories, product details and other internal page templates, on desktop and mobile. Improve hierarchy, spacing, image framing, cards and navigation/filter presentation consistently rather than changing only the named heading.
 - Preserve the supplied Kiran Automation wordmark, reference-aligned red/black/white palette and Lexend Deca/Roboto typography, genuine product imagery, verified Kiran content, useful routes and existing live enquiry/account handoffs. Do not invent claims or specifications, break responsive/accessibility behavior, add unsupported workflow features, or publish to production.
+
+**Scope note:** Outcomes 1–9 record the completed preview phases. Outcome 10 is the user's later, explicit authorization to implement a separate fresh-lead full-stack form/admin system; it supersedes the preview-only form/account boundary in outcomes 5 and 7 only for this new system. No changes to Kiran's live production domain are authorized.
+
+
+## 10. Implement the approved fresh-lead Node/MySQL platform — Partially completed; database-backed verification and public deployment are blocked pending private provider settings
+
+- Keep the React 19/TypeScript/Vite website and add a Node.js 22/Express REST backend that serves the same-origin production frontend and API. Use MySQL with the existing `mysql2`, Drizzle ORM and Drizzle Kit stack. Add checked-in migrations and a `/api/health` endpoint. Use the existing pinned pnpm toolchain and produce a Render-ready service configuration; GitHub Pages is not a backend host.
+- Deploy a temporary public demo on Render with Aiven MySQL as the database, subject to both owners' free-tier limits. Do not use Supabase as the MySQL database. Supabase is only an alternative if the user later approves PostgreSQL instead.
+- Configure the Render Free web service with a health check and same-origin frontend/API. Do not run database migrations during the build or rely on Render's paid-only pre-deploy command; the fresh Aiven schema must be applied from the guarded, retrying production startup path.
+- The public enquiry form must require name, email, mobile, subject and message. It must validate and store each new submission in MySQL; product/application context may be prefilled where the visitor arrived from a product page.
+- The career form must require name, email, address, mobile, area of experience, and resume file. Preserve the six listed public options: Sales, Production, Editorial, Accounts, DTP & Designing, and HR. Validate type/size, store resume files privately in S3-compatible object storage, and provide only authorized administrators short-lived download links. Never write resume files to ephemeral Render disk or a public bucket. Disable/clearly report upload unavailability until private storage is configured.
+- Include the supplied Kiran logo, licensed local fonts and all currently used first-party product/company images in repository-backed `client/public/assets`; do not leave production paths pointing to Manus-only `/manus-storage/` URLs.
+- Store fresh enquiries and career applications only; do not migrate or import existing users, customer accounts, enquiries, career applications, or other live data.
+- Implement private admin sign-in and a protected dashboard for viewing, filtering, updating status and exporting enquiry/career records. Do not implement public customer registration. Seed an admin only from runtime secrets; hash passwords and use protected server-side sessions, secure cookies, CSRF/origin checks and login throttling. Do not commit credentials.
+- Keep SMTP environment variables blank/unconfigured. Persist a successful form submission independently of SMTP status; show accurately that confirmation/notification emails are not active. Do not claim an email was sent. Enable mail and admin password-reset email only after the user configures SMTP privately.
+- Do not submit tests to Kiran Automation's current live forms. Do not claim the new independent form behavior is identical to the unobservable old backend; reproduce only the publicly observed fields and choices. Keep privacy/retention copy marked for owner approval before production.
+- Preserve the supplied Kiran logo, current reference-aligned visual system, verified catalog content, useful page paths and responsive accessibility while adding functional forms and administration.
+- Do not deploy until Render/Aiven accounts, database connection secrets, and private file-storage settings are authorized and configured. No production domain release is included in this work.

@@ -73,3 +73,51 @@ Deliver a tested WebDev preview and an audit/handover report. Record completed, 
 The homepage catalogue section should replace “Browse by the equipment you’re looking for.” with a clearer, buyer-oriented line: **“Explore equipment by category.”** Supporting copy may summarize the six categories and 20 audited listings as a snapshot of the current public catalogue, while reminding buyers to confirm technical fit and availability with Kiran.
 
 Polish the overall visual feel consistently across the homepage and internal page templates: strengthen heading hierarchy, create more intentional catalogue imagery and card surfaces, refine the full-catalogue path/filter controls, and give repeated content sections a clearer rhythm. Preserve the supplied Kiran wordmark, established reference-aligned red/black/white palette and Lexend Deca/Roboto families, real first-party product imagery, verified content and existing routes/account/enquiry handoffs. Keep the work responsive, accessible, restrained, and preview-only; do not add invented product claims, substitute assets, new form behavior, or publish to production.
+
+
+## Full-stack expansion (approved 26 October 2026)
+
+This addendum supersedes the earlier preview-only statements that forms would hand off to the legacy workflow and that no backend would be built. The separate React redesign remains the UI baseline; production integration with the original PHP system and migration of old user/lead data are not requested. The existing GitHub repository is public and its `main` branch contains the preview checkpoint; do not force-push or silently change the Manus-managed repository.
+
+### Stack and hosting
+
+Keep React 19, TypeScript, Vite and Wouter for the UI. Run a same-origin Node.js 22/Express REST service that serves the built frontend and `/api/*`; use MySQL via the already installed `mysql2`, Drizzle ORM and Drizzle Kit, with checked-in migrations. Continue to build with the pinned pnpm 10.18. Use Render's free Node web service for a temporary demo and Aiven's actual MySQL service as the database. Supabase is not selected because its primary database is PostgreSQL, not MySQL. GitHub Pages cannot host the Node API/database. Add a Render Blueprint file and HTTP health endpoint, but never commit secrets. The free demo is not represented as production-grade: the Render service can sleep and the Aiven free service has tight resource/idle limits.
+
+### Fresh intake forms and account model
+
+Replace the preview's external enquiry/career bridges with accessible, server-validated forms. Enquiry retains the original required fields: name, email, mobile, subject and message; product/application context may be optionally prefilled. Career retains name, email, address, mobile, area of experience and a required resume; preserve the six current public values (Sales, Production, Editorial, Accounts, DTP & Designing, HR), correcting the original misnamed city selector to “Area of experience.” Use clear field labels, limits, accessible error/status messages, consent/privacy disclosure, anti-spam/rate limits and reliable duplicate-submit handling. Store new submissions only; do not import old enquiries, careers, customer accounts or user records.
+
+Use a private administrator sign-in and lead dashboard, not public customer registration/login. Seed an administrator only from runtime secrets; never commit password values. Use secure session cookies, salted password hashing, origin/CSRF checks, login throttling and server-side authorization. The dashboard lists, filters, views, updates status and exports enquiry/career records; resume downloads require a signed, short-lived private link. No public signup endpoint or demo credential is allowed.
+
+Resume bytes must not be written to Render's ephemeral local disk or exposed from a public bucket. Add an S3-compatible private storage adapter, defaulting to Cloudflare R2 for the demo, with allowed type/size limits and private downloads. R2 account/bucket credentials remain a deployment prerequisite; uploads must report unavailable until those secrets are configured rather than returning a fake success.
+
+### Email, privacy and release gates
+
+Keep SMTP variables empty in `.env.example` and Render configuration. A new form submission must be saved to MySQL even while email is unconfigured. Do not claim that an email was sent; initialize its notification state as `not_configured` and show that acknowledgements/notifications are not active. SMTP sending and email password reset remain deferred until the user configures SMTP privately. The administrator can change a password when authenticated, and any bootstrap/recovery secret must be set privately.
+
+Use only fresh lead data. Do not test by submitting to the live Kiran forms. The legacy site’s underlying confirmation, mail, anti-spam and account behavior cannot be verified from its public markup; this is a new independent intake system, not a migration of those implementations. Before production, the owner must review the privacy notice, retention rules, company contact identity, data-access/deletion process and any applicable legal text. Keep customer-identifying exports, database credentials, admin secrets and storage keys out of public Git.
+
+Build, type-check, migrate a disposable test database, verify forms and admin access, and inspect the public branch before pushing the completed implementation. Do not deploy production until Render/Aiven (and private file storage, if enabled) are authorized and configured. SMTP remains intentionally unconfigured in this phase.
+
+
+### Free-tier deployment constraints verified before implementation
+
+Render Free sleeps after 15 idle minutes, has ephemeral disk and cannot send outbound SMTP on ports 25, 465 or 587. Render's pre-deploy migration hook is paid-only, so the demo must not depend on it or run migrations during the build; use an idempotent, bounded-retry migration step at service start for the fresh demo database. Later, use a reviewed paid release/pre-deploy workflow for production migrations. Aiven Free is a single 1-CPU/1-GB/1-GB-node MySQL service that can power off after inactivity and is intended for prototypes, not high-traffic production. Keep this public demo low-volume and upgrade before storing business-critical lead data. These official constraints and source URLs are recorded in `docs/hosting-and-storage-research.md`.
+
+
+### Repository- and host-portable visual assets
+
+Every image used by the hosted React application must be checked into `client/public/assets` (the user's supplied Kiran wordmark, audited original company images, and the actual 20 audited product images); the licensed variable fonts remain under `client/public/fonts`. Replace all runtime `/manus-storage/` URLs in website pages with those repository-backed files. This preserves visual fidelity while removing the Manus-only storage dependency from the Render/GitHub source.
+
+### Full-stack project structure
+
+- `client/src/App.tsx` and `client/src/pages/`: preserve the public Kiran page set and mount the new enquiry/career forms, privacy notice and private staff pages.
+- `client/src/pages/IntakeAdminPages.tsx`: accessible same-origin form UX, upload readiness state, staff sign-in, protected dashboard, lead filters/statuses, CSV export and resume-download action.
+- `server/_core/index.ts`: Express process entry, `/api` routing, health/readiness endpoints, production static-file serving and bounded startup migrations/bootstrap.
+- `server/api.ts` and `server/db.ts`: REST validation/auth/admin/R2 routes plus TLS-verified MySQL pool and Drizzle connection.
+- `drizzle/schema.ts`, `drizzle/migrations/`: only fresh admin sessions/users, enquiry and career records; no legacy users or lead migration.
+- `shared/lead-contracts.ts`: shared Zod intake, status and authentication contracts.
+- `scripts/admin-password-hash.ts` and `scripts/admin-bootstrap.ts`: hidden password prompt/hash generation and one-admin verification/seeding against a migrated disposable/demo database.
+- `render.yaml`, `Dockerfile`, `.env.example`, `docs/DEPLOYMENT.md`: portable deployment configuration and secret-safe operator instructions. Provider accounts, TLS CA, private R2 bucket, passwords and SMTP remain outside Git.
+
+The Render Node service serves the Vite build and REST API from one origin. Development runs Vite on port 3000 and a separate Express API on port 4000 behind the `/api` proxy. Production honors Render's injected `PORT`; Aiven MySQL is TLS-verified and R2 uploads remain unavailable until all private storage settings exist.

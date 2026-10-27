@@ -7,7 +7,6 @@ import {
   company,
   getCategoryBySlug,
   legacyBase,
-  legacyEnquiryUrl,
   products,
   type Category,
   type Product,
@@ -15,12 +14,12 @@ import {
 import {
   Breadcrumbs,
   CategoryCard,
-  LiveWorkflowNotice,
   PageIntro,
   ProductCard,
   SectionLabel,
 } from "@/components/SiteShell";
 import { StructuredData } from "@/components/StructuredData";
+import { CareerForm, EnquiryForm } from "./IntakeAdminPages";
 
 export function AboutPage() {
   return (
@@ -37,7 +36,7 @@ export function AboutPage() {
             <Link to="/services" className="text-link">See listed application areas <ArrowRight size={15} aria-hidden="true" /></Link>
           </div>
           <figure className="about-image">
-            <img src="/manus-storage/automation-station_5f543923.jpg" alt="Automation equipment rendering published on Kiran Automation’s existing website" width="723" height="823" loading="lazy" decoding="async" />
+            <img src="/assets/company/04.jpg" alt="Kiran Automation company machine" width="723" height="823" loading="lazy" decoding="async" />
             <figcaption>Equipment image published on Kiran Automation’s current website.</figcaption>
           </figure>
         </div>
@@ -78,7 +77,7 @@ export function ServicesPage() {
       <section className="section section-categories service-categories">
         <div className="container"><div className="section-heading-row"><div><SectionLabel>Equipment discovery</SectionLabel><h2>Browse the product categories.</h2></div></div><div className="category-grid">{categories.map((category) => <CategoryCard key={category.slug} category={category} />)}</div></div>
       </section>
-      <section className="final-cta"><div className="container final-cta-inner"><div><SectionLabel>Ask about an application</SectionLabel><h2>Make the requirement specific.</h2><p>Continue to the existing enquiry workflow to share the process you’re looking to automate.</p></div><Link className="button button-light" to="/enquiry">Enquiry information <ArrowRight size={16} aria-hidden="true" /></Link></div></section>
+      <section className="final-cta"><div className="container final-cta-inner"><div><SectionLabel>Ask about an application</SectionLabel><h2>Make the requirement specific.</h2><p>Use the enquiry form to share the process you’re looking to automate.</p></div><Link className="button button-light" to="/enquiry">Submit an enquiry <ArrowRight size={16} aria-hidden="true" /></Link></div></section>
     </>
   );
 }
@@ -146,7 +145,7 @@ export function ProductDetailPage({ product }: { product: Product }) {
           <p className="detail-intro">This preview carries over the product name and image currently published in Kiran Automation’s catalog. It does not infer specifications, configurations, capacity, performance or compatibility.</p>
           {product.reviewNote ? <div className="review-note"><strong>Owner review needed</strong><p>{product.reviewNote}</p></div> : null}
           <div className="spec-placeholder"><span>Technical information</span><p>Confirm the intended application, technical specification and current availability with Kiran Automation.</p></div>
-          <Link to="/enquiry" className="button button-orange">Ask about this listing <ArrowRight size={16} aria-hidden="true" /></Link>
+          <Link to={`/enquiry?productSlug=${encodeURIComponent(product.slug)}`} className="button button-orange">Ask about this listing <ArrowRight size={16} aria-hidden="true" /></Link>
           <p className="detail-back"><Link to={category?.path ?? "/products"}><ArrowLeft size={15} aria-hidden="true" /> Back to {category?.name ?? "products"}</Link></p>
         </div>
       </section>
@@ -159,12 +158,12 @@ export function ContactPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Contact" }]} />
-      <PageIntro eyebrow="Contact" title="Start a conversation with Kiran Automation." description="Use the current contact details listed on Kiran Automation’s website and continue to its existing enquiry workflow for business requests." />
+      <PageIntro eyebrow="Contact" title="Start a conversation with Kiran Automation." description="Use the current contact details listed on Kiran Automation’s website or submit a fresh business enquiry here." />
       <section className="section contact-section">
         <div className="container contact-grid">
           <div className="contact-panel"><MapPin size={22} aria-hidden="true" /><span className="fact-label">Address listed on the existing website</span><h2>{company.address}</h2><p>{company.contactNote}</p></div>
           <div className="contact-panel"><span className="contact-icon" aria-hidden="true">@</span><span className="fact-label">Email listed on the existing website</span><h2><a href={`mailto:${company.email}`}>{company.email}</a></h2><p>Use email for direct contact. Phone destinations found on the current site require confirmation before they can safely be linked from this redesign.</p></div>
-          <div className="contact-form-card"><SectionLabel>Business enquiry</SectionLabel><h2>Keep using the existing form.</h2><p>The current enquiry page has required fields and a working submission destination on Kiran’s site. This separate preview does not collect or send visitor details.</p><a className="button button-dark" href={legacyEnquiryUrl} target="_blank" rel="noreferrer">Open current enquiry form <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+          <div className="contact-form-card"><SectionLabel>Business enquiry</SectionLabel><h2>Send a new enquiry.</h2><p>Provide the required details using the form below. Submissions are stored; email acknowledgement is not configured.</p><EnquiryForm /></div>
         </div>
       </section>
     </>
@@ -176,8 +175,8 @@ export function EnquiryPage() {
     <>
       <Breadcrumbs items={[{ label: "Enquiry" }]} />
       <PageIntro eyebrow="Business enquiry" title="Tell Kiran what the process needs to do." description="For a useful first conversation, be ready to describe the operation, part, current process and the equipment or application you would like to discuss." />
-      <section className="section bridge-section"><div className="container bridge-container"><LiveWorkflowNotice kind="enquiry" /><p className="bridge-footnote">This preview has no enquiry endpoint. The existing Kiran form is preserved and opens in a separate tab.</p></div></section>
-      <section className="section enquiry-context"><div className="container"><SectionLabel>Helpful context</SectionLabel><h2>What to include in the live form.</h2><div className="context-grid"><article><span>01</span><h3>The operation</h3><p>Describe the task, current process and where it happens in the line.</p></article><article><span>02</span><h3>The part or product</h3><p>Identify the part being handled, tested, assembled or processed.</p></article><article><span>03</span><h3>The requirement</h3><p>Share any constraints or information that will help Kiran assess the request.</p></article></div><p className="content-caveat">These are suggestions for an enquiry, not a promise of project scope or response time.</p></div></section>
+      <section className="section bridge-section"><div className="container bridge-container"><div className="intake-panel"><EnquiryForm /></div><p className="bridge-footnote">Your details are stored for review. Email acknowledgement is not configured.</p></div></section>
+      <section className="section enquiry-context"><div className="container"><SectionLabel>Helpful context</SectionLabel><h2>Make the requirement specific.</h2><div className="context-grid"><article><span>01</span><h3>The operation</h3><p>Describe the task, current process and where it happens in the line.</p></article><article><span>02</span><h3>The part or product</h3><p>Identify the part being handled, tested, assembled or processed.</p></article><article><span>03</span><h3>The requirement</h3><p>Share constraints or information that may help Kiran assess the request.</p></article></div><p className="content-caveat">These are suggestions for an enquiry, not a promise of project scope or response time.</p></div></section>
     </>
   );
 }
@@ -186,8 +185,8 @@ export function CareerPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Careers" }]} />
-      <PageIntro eyebrow="Careers" title="Continue to the current application page." description="The existing Kiran Automation site provides a career application workflow. This preview does not collect applications, create accounts or upload resumes." />
-      <section className="section bridge-section"><div className="container bridge-container"><LiveWorkflowNotice kind="career" /><p className="bridge-footnote">For the current areas of experience, required fields and document formats, use the existing application page.</p></div></section>
+      <PageIntro eyebrow="Careers" title="Apply to Kiran Automation." description="Submit a fresh application with your area of experience and resume. Applications are stored for review; email acknowledgement is not configured." />
+      <section className="section bridge-section"><div className="container bridge-container"><div className="intake-panel"><CareerForm /></div></div></section>
     </>
   );
 }

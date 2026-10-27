@@ -1,91 +1,60 @@
-import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import mysql, { type Pool } from "mysql2/promise";
+import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
+import * as schema from "../drizzle/schema";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+let pool: Pool | null = null;
+let db: MySql2Database<typeof schema> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
-export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
+function mysqlOptions() {
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error("DATABASE_URL is not configured");
+  const parsed = new URL(url);
+  const localHost = ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
+  const production = process.env.NODE_ENV === "production";
+  const ca = process.env.MYSQL_SSL_CA;
+  if (production && !ca) throw new Error("MYSQL_SSL_CA is required in production");
+  if (production && !localHost && !ca) throw new Error("Database TLS is required in production");
+  if (!production && !localHost && !ca) throw new Error("For non-local development databases, configure MYSQL_SSL_CA");
+
+  const ssl = ca ? { ca, rejectUnauthorized: true } : undefined;
+  return {
+    uri: url,
+    waitForConnections: true,
+    connectionLimit: 3,
+    maxIdle: 2,
+    idleTimeout: 30_000,
+    queueLimit: 20,
+    connectTimeout: 10_000,
+    enableKeepAlive: true,
+    ssl,
+  } as mysql.PoolOptions;
 }
 
-export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
+export function getPool(): Pool {
+  if (!pool) {
+    const options = mysqlOptions();
+    pool = mysql.createPool(options);
+    db = drizzle(pool, { schema, mode: "default" });
   }
+  return pool;
+}
 
-  const db = await getDb();
-  if (!db) {
-    throw new Error("Database is not available");
-  }
+export function getDb(): MySql2Database<typeof schema> {
+  getPool();
+  if (!db) throw new Error("Database unavailable");
+  return db;
+}
 
+export async function checkDatabase(): Promise<boolean> {
   try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
+    await getPool().query("SELECT 1");
+    return true;
+  } catch {
+    return false;
   }
 }
 
-export async function getUserByOpenId(openId: string) {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
-
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+export function resetDatabaseForTests() {
+  pool = null;
+  db = null;
 }
-
-// TODO: add feature queries here as your schema grows.

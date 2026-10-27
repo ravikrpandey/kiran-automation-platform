@@ -1,12 +1,12 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
-import { applications, categories, featuredProducts, legacyEnquiryUrl } from "@/content/siteData";
+import { applications, categories, featuredProducts } from "@/content/siteData";
 import { CategoryCard, ProductCard, SectionLabel } from "@/components/SiteShell";
 
 const faqs = [
   {
     question: "Can I discuss a specific manufacturing application?",
-    answer: "The current Kiran Automation website lists applications including PCB handling and testing, SMT-machine loading, robotic soldering, inspection and material handling. Use the live enquiry form to describe your operation and ask the team to confirm fit.",
+    answer: "The current Kiran Automation website lists applications including PCB handling and testing, SMT-machine loading, robotic soldering, inspection and material handling. Use the enquiry form to describe your operation and ask the team to confirm fit.",
   },
   {
     question: "Are product specifications available in this preview?",
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "How do I request a quotation?",
-    answer: "Continue to the existing enquiry form on Kiran Automation’s website. This preview does not collect or submit enquiry data.",
+    answer: "Use this site’s enquiry form to submit a fresh request. Submissions are stored for review; email acknowledgement is not configured.",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <div className="hero-visual">
             <div className="hero-image-frame">
-              <img src="/manus-storage/hero-workcell_fedf49f0.jpg" alt="Robotic automation equipment rendering published on Kiran Automation’s existing website" width="1600" height="770" fetchPriority="high" />
+              <img src="/assets/company/03.jpg" alt="Kiran Automation home machine" width="1600" height="770" fetchPriority="high" />
             </div>
             <div className="hero-caption"><span className="caption-dot" />Industrial automation equipment</div>
             <div className="hero-side-note" aria-hidden="true">DESIGN · INTEGRATION · AUTOMATION</div>
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="section section-approach">
         <div className="container approach-grid">
           <div className="approach-image">
-            <img src="/manus-storage/robot-cell-installation_b8c550a8.jpg" alt="Robot and control equipment photographed in an industrial setting, from Kiran Automation’s existing site" width="670" height="500" loading="lazy" decoding="async" />
+            <img src="/assets/company/service-4.jpg" alt="Kiran Automation robot cell" width="670" height="500" loading="lazy" decoding="async" />
             <span className="image-index">KIRAN AUTOMATION · EQUIPMENT IMAGE</span>
           </div>
           <div className="approach-copy">
@@ -132,8 +132,8 @@ export default function Home() {
           <div className="faq-heading">
             <SectionLabel>Good to know</SectionLabel>
             <h2>Before you enquire.</h2>
-            <p>For current product, project and account information, continue to Kiran Automation’s existing website.</p>
-            <a className="text-link" href={legacyEnquiryUrl} target="_blank" rel="noreferrer">Open current enquiry form <ArrowUpRight size={15} aria-hidden="true" /></a>
+            <p>For product and project questions, submit a fresh enquiry. Email acknowledgement is not configured.</p>
+            <Link className="text-link" to="/enquiry">Submit an enquiry <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
           <div className="faq-list">
             {faqs.map((faq) => (
@@ -151,7 +151,7 @@ export default function Home() {
           <div>
             <SectionLabel>Have an application in mind?</SectionLabel>
             <h2>Bring the process into focus.</h2>
-            <p>Share an equipment requirement or manufacturing application through Kiran Automation’s existing enquiry workflow.</p>
+            <p>Share an equipment requirement or manufacturing application using the fresh-lead enquiry form.</p>
           </div>
           <Link to="/enquiry" className="button button-light">Discuss your requirement <ArrowUpRight size={16} aria-hidden="true" /></Link>
         </div>

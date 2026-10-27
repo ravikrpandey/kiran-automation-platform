@@ -1,14 +1,17 @@
-# Kiran Automation Website Redesign
+# Kiran Automation — full-stack demo
 
-React / Express / tRPC / Drizzle starter, adapted from the Sandbox web-db-user template.
+This repository contains a React/Vite frontend and an independent Node.js/Express + MySQL demo for fresh business enquiries and career applications. The intended demo deployment is Render Free, Aiven MySQL and private Cloudflare R2 for resumes. It does not connect to or migrate the legacy PHP site, customer accounts or existing lead data.
 
-- `pnpm dev`: development server; honors `PORT` (default 3000).
-- `pnpm build` / `pnpm start`: build and serve `dist/index.js` and `dist/public/`.
-- `pnpm db:migrate`: apply checked-in migrations. `pnpm db:push`: generate and apply new schema changes.
-- `pnpm check` / `pnpm test`: types and application tests.
+## Local development
 
-Start with the Webdev skill's default-template guide. Platform login, storage, payments and service contracts live in its shared references; read the relevant capability before extending its helper.
+Use Node.js 22 and the repository-pinned pnpm 10.18. Install with `pnpm install --frozen-lockfile`, copy `.env.example` to `.env`, and fill only values for services you control. `pnpm dev` starts Vite on port 3000 and the API on port 4000; `pnpm build` creates the prerendered frontend and bundled Node service. Run `pnpm check` and `pnpm test` for local checks. `pnpm db:migrate` applies the checked-in migrations to `DATABASE_URL`.
 
-`server/_core/publicConfig.ts` exposes only named public runtime values. Private keys stay server-side. The platform serves managed `/manus-storage/` assets; the application does not register a second proxy.
+Use only a disposable local/demo MySQL database. Never point tests at Kiran's live systems or use real customer data. For a fresh local database, migrate it before database-backed flows. `pnpm admin:hash` prompts for and confirms a password without echoing it, then prints a salted scrypt hash. Set the email/hash through private local environment variables and run `pnpm admin:bootstrap` after migrations; this command creates one administrator or verifies the matching existing one. Production startup performs the checked-in migrations with bounded retries and the same one-admin bootstrap from private runtime settings.
 
-Platform configuration is readable and editable through `webdev.config`. Default settings are initial values, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+See [Deployment and configuration](docs/DEPLOYMENT.md) for Render/Aiven/R2 setup, TLS, privacy and operational gates. Hosting assumptions and source citations are in [hosting and storage research](docs/hosting-and-storage-research.md).
+
+## Demo limitations and security
+
+Render Free sleeps after 15 idle minutes and has ephemeral disk; Aiven Free is a small single-node prototype database that may power off after inactivity. This is a temporary, low-volume demo, not an always-on or production-grade lead system. Resume submissions remain unavailable until private R2 credentials are configured and tested. SMTP is intentionally unconfigured: forms must not claim that an email was sent.
+
+Never commit `.env`, database credentials, Aiven CA material, admin password hashes, R2/mail keys or customer-identifying exports. Enter private values only in the ignored local `.env` or the relevant provider dashboard. Do not collect real/business submissions until privacy, retention, backup/recovery and operational gates have been completed. No production domain or DNS change is included.

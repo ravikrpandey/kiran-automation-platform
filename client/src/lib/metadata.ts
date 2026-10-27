@@ -1,6 +1,6 @@
 import { categories, company, getProductBySlug } from "@/content/siteData";
 
-export type PageMetadata = { title: string; description: string; type: "website" | "product" };
+export type PageMetadata = { title: string; description: string; type: "website" | "product"; robots?: string };
 
 const pageMetadata: Record<string, PageMetadata> = {
   "/": {
@@ -30,19 +30,25 @@ const pageMetadata: Record<string, PageMetadata> = {
   },
   "/enquiry": {
     title: "Business Enquiry | Kiran Automation",
-    description: "Continue to Kiran Automation’s existing enquiry workflow; this preview does not submit enquiries.",
+    description: "Submit a fresh business enquiry to Kiran Automation. Email acknowledgement is not configured.",
     type: "website",
   },
   "/contact-us": {
     title: "Contact Kiran Automation | New Delhi",
-    description: "View contact details currently listed by Kiran Automation and continue to the existing enquiry process.",
+    description: "View Kiran Automation contact details and submit a fresh business enquiry.",
     type: "website",
   },
   "/career": {
     title: "Careers | Kiran Automation",
-    description: "Continue to Kiran Automation’s existing careers page to review current application options.",
+    description: "Submit a fresh career application. Resume storage availability is checked before submission.",
     type: "website",
   },
+  "/privacy": { title: "Privacy Notice | Kiran Automation", description: "Draft privacy notice for review before production.", type: "website" },
+  "/admin/login": { title: "Staff Sign-in | Kiran Automation", description: "Private administrator sign-in for Kiran Automation lead management.", type: "website", robots: "noindex, nofollow" },
+  "/admin": { title: "Lead Dashboard | Kiran Automation", description: "Private administrator lead dashboard.", type: "website", robots: "noindex, nofollow" },
+  "/login": { title: "Staff Sign-in Guidance | Kiran Automation", description: "Customer accounts are not part of this fresh-lead demo.", type: "website", robots: "noindex, nofollow" },
+  "/register": { title: "Customer Registration Unavailable | Kiran Automation", description: "This fresh-lead demo does not include public customer accounts.", type: "website", robots: "noindex, nofollow" },
+  "/forgot": { title: "Password Recovery | Kiran Automation", description: "Email password reset is unavailable until email service is configured.", type: "website", robots: "noindex, nofollow" },
   "/404": {
     title: "Page not found | Kiran Automation",
     description: "This address is not part of the Kiran Automation preview.",

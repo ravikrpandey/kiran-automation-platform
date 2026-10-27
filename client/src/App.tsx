@@ -10,6 +10,14 @@ import { previewRobots, getPageMetadata, siteName } from "./lib/metadata";
 import { company, getCategoryBySlug, getProductBySlug, legacyBase } from "./content/siteData";
 import Home from "./pages/Home";
 import {
+  AdminDashboardPage,
+  AdminLoginPage,
+  ForgotCompatibilityPage,
+  LoginCompatibilityPage,
+  PrivacyPage,
+  RegisterCompatibilityPage,
+} from "./pages/IntakeAdminPages";
+import {
   AboutPage,
   CareerPage,
   CategoryPage,
@@ -37,7 +45,7 @@ function MetadataManager() {
     const metadata = getPageMetadata(path);
     document.title = metadata.title;
     setMeta("name", "description", metadata.description);
-    setMeta("name", "robots", previewRobots);
+    setMeta("name", "robots", metadata.robots ?? previewRobots);
     setMeta("property", "og:type", metadata.type);
     setMeta("property", "og:title", metadata.title);
     setMeta("property", "og:description", metadata.description);
@@ -68,6 +76,12 @@ function PageRoutes() {
       <Route path="/enquiry" component={EnquiryPage} />
       <Route path="/contact-us" component={ContactPage} />
       <Route path="/career" component={CareerPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/admin/login" component={AdminLoginPage} />
+      <Route path="/admin" component={AdminDashboardPage} />
+      <Route path="/login" component={LoginCompatibilityPage} />
+      <Route path="/register" component={RegisterCompatibilityPage} />
+      <Route path="/forgot" component={ForgotCompatibilityPage} />
       <Route><NotFoundPage /></Route>
     </Switch>
   );

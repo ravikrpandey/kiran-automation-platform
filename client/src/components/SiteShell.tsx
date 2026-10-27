@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { categories, company, legacyBase, legacyForgotUrl, legacyLoginUrl, legacyRegisterUrl } from "@/content/siteData";
+import { categories, company, legacyBase } from "@/content/siteData";
 import { StructuredData } from "./StructuredData";
 
 export function SiteHeader() {
@@ -16,9 +16,7 @@ export function SiteHeader() {
           <a href={`mailto:${company.email}`} aria-label={`Email ${company.email}`}>
             {company.email}
           </a>
-          <a href={legacyLoginUrl} target="_blank" rel="noreferrer" className="utility-account">
-            Account sign in <ArrowUpRight size={13} aria-hidden="true" />
-          </a>
+          <span className="utility-account">Kiran Automation · Delhi</span>
         </div>
       </div>
       <header className="site-header">
@@ -26,7 +24,7 @@ export function SiteHeader() {
           <Link to="/" className="brand-link" aria-label="Kiran Automation home" onClick={closeMenu}>
             <img
               className="brand-logo"
-              src="/manus-storage/kiran-automation-logo_d1894f6b.png"
+              src="/assets/brand/kiran-automation-logo.png"
               alt="Kiran Automation — Wings of Innovation"
               width="1849"
               height="366"
@@ -56,7 +54,7 @@ export function SiteHeader() {
             <Link to="/about-us" onClick={closeMenu}>About</Link>
             <Link to="/contact-us" onClick={closeMenu}>Contact</Link>
             <Link to="/enquiry" className="nav-cta" onClick={closeMenu}>Discuss a project <ArrowRight size={15} aria-hidden="true" /></Link>
-            <a href={legacyRegisterUrl} target="_blank" rel="noreferrer" className="mobile-account">Create an account <ArrowUpRight size={14} aria-hidden="true" /></a>
+            <Link to="/register" onClick={closeMenu} className="mobile-account">Customer registration unavailable</Link>
           </nav>
         </div>
       </header>
@@ -70,7 +68,7 @@ export function SiteFooter() {
       <div className="container footer-main">
         <div className="footer-brand-block">
           <Link to="/" className="footer-logo-link" aria-label="Kiran Automation home">
-            <img src="/manus-storage/kiran-automation-logo_d1894f6b.png" alt="Kiran Automation — Wings of Innovation" width="1849" height="366" loading="lazy" />
+            <img src="/assets/brand/kiran-automation-logo.png" alt="Kiran Automation — Wings of Innovation" width="1849" height="366" loading="lazy" />
           </Link>
           <p>Robotic automation and engineered equipment, as described in Kiran Automation’s current public catalog.</p>
           <a className="footer-email" href={`mailto:${company.email}`}>{company.email} <ArrowUpRight size={14} aria-hidden="true" /></a>
@@ -87,17 +85,15 @@ export function SiteFooter() {
           {categories.map((category) => <Link key={category.slug} to={category.path}>{category.name}</Link>)}
         </div>
         <div className="footer-column">
-          <h2>Continue on Kiran’s site</h2>
-          <a href={legacyLoginUrl} target="_blank" rel="noreferrer">Sign in <ArrowUpRight size={13} aria-hidden="true" /></a>
-          <a href={legacyRegisterUrl} target="_blank" rel="noreferrer">Register <ArrowUpRight size={13} aria-hidden="true" /></a>
-          <a href={legacyForgotUrl} target="_blank" rel="noreferrer">Reset password <ArrowUpRight size={13} aria-hidden="true" /></a>
+          <h2>Get in touch</h2>
           <Link to="/career">Career enquiries</Link>
           <Link to="/enquiry">Business enquiries</Link>
+          <Link to="/privacy">Privacy notice</Link>
         </div>
       </div>
       <div className="container footer-bottom">
         <p>Preview content is based on listings published on Kiran Automation’s existing website and requires owner verification before release.</p>
-        <span>© {new Date().getFullYear()} Kiran Automation</span>
+        <span>© {new Date().getFullYear()} Kiran Automation · <Link to="/admin/login" className="staff-signin-link">Staff sign-in</Link></span>
       </div>
     </footer>
   );
@@ -178,27 +174,6 @@ export function ProductCard({ product }: { product: import("@/content/siteData")
         <span className="product-action">View listing <ArrowRight size={15} aria-hidden="true" /></span>
       </span>
     </Link>
-  );
-}
-
-export function LiveWorkflowNotice({ kind }: { kind: "enquiry" | "career" }) {
-  const isEnquiry = kind === "enquiry";
-  const href = isEnquiry ? "https://www.kiranautomation.com/enquiry" : "https://www.kiranautomation.com/career";
-  const title = isEnquiry ? "Continue to Kiran’s current enquiry form" : "Continue to Kiran’s current career page";
-  const body = isEnquiry
-    ? "This preview does not submit or store enquiries. To preserve the existing form and its backend, use the current form on Kiran Automation’s website."
-    : "This preview does not collect applications or resumes. Use the current careers page to see the live application fields and upload options.";
-  return (
-    <aside className="live-workflow-notice" aria-labelledby={`${kind}-notice-title`}>
-      <div className="notice-mark" aria-hidden="true">↗</div>
-      <div>
-        <h2 id={`${kind}-notice-title`}>{title}</h2>
-        <p>{body}</p>
-        <a className="button button-dark" href={href} target="_blank" rel="noreferrer">
-          Open live {isEnquiry ? "enquiry form" : "career page"} <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
-      </div>
-    </aside>
   );
 }
 
