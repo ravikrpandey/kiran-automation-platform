@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { categories, company, legacyBase, publicAsset } from "@/content/siteData";
@@ -6,7 +6,41 @@ import { StructuredData } from "./StructuredData";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const closeMenu = () => setMenuOpen(false);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const [location] = useLocation();
+  const productsRef = useRef<HTMLDetailsElement>(null);
+  const productsSummaryRef = useRef<HTMLElement>(null);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setProductsOpen(false);
+  };
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setProductsOpen(false);
+  }, [location]);
+
+  useEffect(() => {
+    if (!productsOpen) return;
+
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      if (!(event.target instanceof Node) || !productsRef.current?.contains(event.target)) {
+        setProductsOpen(false);
+      }
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setProductsOpen(false);
+      productsSummaryRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePointer);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [productsOpen]);
 
   return (
     <>
@@ -42,9 +76,16 @@ export function SiteHeader() {
           </button>
           <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label="Primary navigation">
             <Link to="/services" onClick={closeMenu}>Applications</Link>
-            <details className="nav-products">
-              <summary>Products <ChevronDown size={14} aria-hidden="true" /></summary>
-              <div className="product-menu">
+            <details
+              ref={productsRef}
+              className="nav-products"
+              open={productsOpen}
+              onToggle={(event) => setProductsOpen(event.currentTarget.open)}
+            >
+              <summary ref={productsSummaryRef} aria-expanded={productsOpen} aria-controls="product-menu">
+                Products <ChevronDown size={14} aria-hidden="true" />
+              </summary>
+              <div className="product-menu" id="product-menu">
                 <Link to="/products" onClick={closeMenu} className="product-menu-all">Explore all products <ArrowRight size={14} aria-hidden="true" /></Link>
                 {categories.map((category) => (
                   <Link key={category.slug} to={category.path} onClick={closeMenu}>{category.name}</Link>
